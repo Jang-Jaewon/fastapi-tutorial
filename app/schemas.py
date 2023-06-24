@@ -74,4 +74,3 @@ class ListItemResponse(BaseModel):
     status: str
     results: int
     items: List[ItemBaseSchema]
-

@@ -1,6 +1,10 @@
 from time import time
 
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
+
+from app.config import settings
+from app.routers import auth, user
 
 app = FastAPI()
 
@@ -15,6 +19,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(auth.router, tags=["Auth"], prefix="/api/auth")
+app.include_router(user.router, tags=["Users"], prefix="/api/users")
 
 
 @app.middleware("http")
