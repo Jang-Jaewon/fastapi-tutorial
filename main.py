@@ -5,6 +5,9 @@ app = FastAPI()
 app.include_router(router=router)
 
 
-@app.get("/hello")
-def hello_world():
-    return "Hello World"
+@app.get("/converter/{from_currency}")
+def hello_world(from_currency: str, to_currencies: str, price: float):
+    print(from_currency)
+    print(to_currencies)
+    print(price)
+    return "It works"
