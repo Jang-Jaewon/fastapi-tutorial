@@ -1,13 +1,15 @@
 from fastapi import APIRouter
-from config import settings
-
-currency_api_key = settings.ALPHA_VANTAGE_API_KEY
+from converter import sync_converter
 
 router = APIRouter()
 
 
 @router.get("/converter/{from_currency}")
 def converter(from_currency: str, to_currencies: str, price: float):
-    print(from_currency)
-    print(currency_api_key)
-    return "hello"
+    to_currencies = to_currencies.split(",")
+    result = []
+    for currency in to_currencies:
+        response = sync_converter(from_currency, currency, price)
+        result.append(response)
+
+    return result
