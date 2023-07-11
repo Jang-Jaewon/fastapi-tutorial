@@ -8,10 +8,13 @@ packages = [{include = "fastapi_tutorial"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-fastapi = "^0.99.1"
+fastapi = "^0.100.0"
 uvicorn = "^0.22.0"
-requests = "^2.31.0"
-aiohttp = "^3.8.4"
+sqlalchemy = "^2.0.18"
+psycopg2-binary = "^2.9.6"
+pytest = "^7.4.0"
+alembic = "^1.11.1"
+python-decouple = "^3.8"
 
 
 [build-system]
