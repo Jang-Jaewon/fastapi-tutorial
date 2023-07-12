@@ -1,17 +1,15 @@
 import pytest
-from app.use_cases.category import CategoryUseCases
+from fastapi.exceptions import HTTPException
+
 from app.db.models import Category as CategoryModel
 from app.schemas.category import Category, CategoryOutput
-from fastapi.exceptions import HTTPException
+from app.use_cases.category import CategoryUseCases
 
 
 def test_add_category_uc(db_session):
     uc = CategoryUseCases(db_session)
 
-    category = Category(
-        name="Food",
-        slug="food"
-    )
+    category = Category(name="Food", slug="food")
 
     uc.add_category(category=category)
 

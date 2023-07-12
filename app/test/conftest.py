@@ -1,4 +1,5 @@
 import pytest
+
 from app.db.connection import Session
 from app.db.models import Category as CategoryModel
 

@@ -1,5 +1,6 @@
-from fastapi.testclient import TestClient
 from fastapi import status
+from fastapi.testclient import TestClient
+
 from app.db.models import Category as CategoryModel
 from app.main import app
 
@@ -7,10 +8,7 @@ client = TestClient(app)
 
 
 def test_add_category_route(db_session):
-    body = {
-        "name": "Food",
-        "slug": "food"
-    }
+    body = {"name": "Food", "slug": "food"}
 
     response = client.post("/category/add", json=body)
 
@@ -23,7 +21,7 @@ def test_add_category_route(db_session):
 
 
 def test_list_categories_route(categories_on_db):
-    response = client.get('/category/list')
+    response = client.get("/category/list")
 
     assert response.status_code == status.HTTP_200_OK
     data = response.json()
@@ -32,7 +30,7 @@ def test_list_categories_route(categories_on_db):
     assert data[0] == {
         "name": categories_on_db[0].name,
         "slug": categories_on_db[0].slug,
-        "id": categories_on_db[0].id
+        "id": categories_on_db[0].id,
     }
 
 
@@ -41,7 +39,7 @@ def test_delete_category_route(db_session):
     db_session.add(category_model)
     db_session.commit()
 
-    response = client.delete(f'/category/delete/{category_model.id}')
+    response = client.delete(f"/category/delete/{category_model.id}")
 
     assert response.status_code == status.HTTP_200_OK
 

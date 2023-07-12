@@ -1,8 +1,9 @@
+from fastapi import status
+from fastapi.exceptions import HTTPException
 from sqlalchemy.orm import Session
+
 from app.db.models import Category as CategoryModel
 from app.schemas.category import Category, CategoryOutput
-from fastapi.exceptions import HTTPException
-from fastapi import status
 
 
 class CategoryUseCases:
@@ -25,7 +26,9 @@ class CategoryUseCases:
     def delete_category(self, id: int):
         category_model = self.db_session.query(CategoryModel).filter_by(id=id).first()
         if not category_model:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Category not found')
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Category not found"
+            )
 
         self.db_session.delete(category_model)
         self.db_session.commit()
