@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 from app.routers.category_routers import router as category_router
+from app.routers.product_routers import router as product_router
 
 app = FastAPI()
 
@@ -11,3 +12,4 @@ def health_check():
 
 
 app.include_router(category_router)
+app.include_router(product_router)

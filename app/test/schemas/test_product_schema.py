@@ -1,5 +1,5 @@
 import pytest
-from app.schemas.product import Product
+from app.schemas.product import Product, ProductInput
 
 
 def test_product_schema():
@@ -52,3 +52,27 @@ def test_product_schema_invalid_price():
             price=0,
             stock=22
         )
+
+
+def test_product_input_schema():
+    product = Product(
+        name="Kimchi-Soup",
+        slug="kimchi-soup",
+        price=22.99,
+        stock=22
+    )
+
+    product_input = ProductInput(
+        category_slug="food",
+        product=product
+    )
+
+    assert product_input.model_dump() == {
+        "category_slug": "food",
+        "product": {
+            "name": "Kimchi-Soup",
+            "slug": "kimchi-soup",
+            "price": 22.99,
+            "stock": 22
+        }
+    }
