@@ -1,6 +1,9 @@
 build:
 	dockst compose build
 
+stop:
+	docker compose down
+
 start:
 	docker compose up -d
 
