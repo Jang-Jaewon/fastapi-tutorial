@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from app.routers.deps import get_db_session
 from app.use_cases.product import ProductUseCases
 from app.schemas.product import ProductInput
+from app.schemas.product import Product
 
 
 router = APIRouter(prefix='/product', tags=['Product'])
@@ -20,3 +21,15 @@ def add_product(
     )
 
     return Response(status_code=status.HTTP_201_CREATED)
+
+
+@router.put('/update/{id}', description='Update product')
+def update_product(
+    id: int,
+    product: Product,
+    db_session: Session = Depends(get_db_session)
+):
+    uc = ProductUseCases(db_session=db_session)
+    uc.update_product(id=id, product=product)
+
+    return Response(status_code=status.HTTP_200_OK)
