@@ -48,7 +48,7 @@ def product_on_db(db_session):
         slug="volvo-xc",
         price=100.99,
         stock=20,
-        category_id=category.id
+        category_id=category.id,
     )
 
     db_session.add(product)

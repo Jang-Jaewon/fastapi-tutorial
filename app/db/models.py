@@ -1,5 +1,7 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Float, func
+from sqlalchemy import (Column, DateTime, Float, ForeignKey, Integer, String,
+                        func)
 from sqlalchemy.orm import relationship
+
 from app.db.base import Base
 
 
