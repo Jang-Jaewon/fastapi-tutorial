@@ -76,10 +76,10 @@ def products_on_db(db_session):
             name="Cat", slug="cat", price=100, stock=10, category_id=category.id
         ),
         ProductModel(
-            name="Tiger", slug="tiger", price=100, stock=10, category_id=category.id
+            name="Hot-Dog", slug="hot-dog", price=100, stock=10, category_id=category.id
         ),
         ProductModel(
-            name="Bear", slug="bear", price=100, stock=10, category_id=category.id
+            name="Dog-Bear", slug="bear", price=100, stock=10, category_id=category.id
         ),
     ]
 
