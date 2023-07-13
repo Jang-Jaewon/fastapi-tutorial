@@ -59,3 +59,41 @@ def product_on_db(db_session):
     db_session.delete(product)
     db_session.delete(category)
     db_session.commit()
+
+
+@pytest.fixture()
+def products_on_db(db_session):
+    category = CategoryModel(name="Animal", slug="animal")
+    db_session.add(category)
+    db_session.commit()
+    db_session.refresh(category)
+
+    products = [
+        ProductModel(
+            name="Dog", slug="dog", price=100, stock=10, category_id=category.id
+        ),
+        ProductModel(
+            name="Cat", slug="cat", price=100, stock=10, category_id=category.id
+        ),
+        ProductModel(
+            name="Tiger", slug="tiger", price=100, stock=10, category_id=category.id
+        ),
+        ProductModel(
+            name="Bear", slug="bear", price=100, stock=10, category_id=category.id
+        ),
+    ]
+
+    for product in products:
+        db_session.add(product)
+    db_session.commit()
+
+    for product in products:
+        db_session.refresh(product)
+
+    yield products
+
+    for product in products:
+        db_session.delete(product)
+
+    db_session.delete(category)
+    db_session.commit()

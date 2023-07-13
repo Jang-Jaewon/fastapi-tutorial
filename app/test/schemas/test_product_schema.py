@@ -1,12 +1,13 @@
 import pytest
 
-from app.schemas.product import Product, ProductInput
+from app.schemas.category import Category
+from app.schemas.product import Product, ProductInput, ProductOutput
 
 
 def test_product_schema():
     product = Product(name="Kimchi-Soup", slug="kimchi-soup", price=22.99, stock=22)
 
-    assert product.dict() == {
+    assert product.model_dump() == {
         "name": "Kimchi-Soup",
         "slug": "kimchi-soup",
         "price": 22.99,
@@ -45,4 +46,21 @@ def test_product_input_schema():
             "price": 22.99,
             "stock": 22,
         },
+    }
+
+
+def test_product_output_schema():
+    category = Category(name="Animal", slug="animal")
+
+    product_output = ProductOutput(
+        id=1, name="Dog", slug="dog", price=10, stock=10, category=category
+    )
+
+    assert product_output.model_dump() == {
+        "id": 1,
+        "name": "Dog",
+        "slug": "dog",
+        "price": 10,
+        "stock": 10,
+        "category": {"name": "Animal", "slug": "animal"},
     }
