@@ -32,7 +32,7 @@ class ProductInput(CustomBaseModel):
 
 class ProductOutput(Product):
     id: int
-    category: Category
+    category: CategoryOutput
 
     class Config:
         from_attributes = True

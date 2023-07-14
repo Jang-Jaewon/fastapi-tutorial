@@ -1,6 +1,6 @@
 import pytest
 
-from app.schemas.category import Category
+from app.schemas.category import Category, CategoryOutput
 from app.schemas.product import Product, ProductInput, ProductOutput
 
 
@@ -50,7 +50,7 @@ def test_product_input_schema():
 
 
 def test_product_output_schema():
-    category = Category(name="Animal", slug="animal")
+    category = CategoryOutput(id=2, name="Animal", slug="animal")
 
     product_output = ProductOutput(
         id=1, name="Dog", slug="dog", price=10, stock=10, category=category
@@ -62,5 +62,5 @@ def test_product_output_schema():
         "slug": "dog",
         "price": 10,
         "stock": 10,
-        "category": {"name": "Animal", "slug": "animal"},
+        "category": {"id": 2, "name": "Animal", "slug": "animal"},
     }

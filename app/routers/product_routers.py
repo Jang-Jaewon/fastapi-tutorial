@@ -1,6 +1,7 @@
 from typing import List
 
-from fastapi import APIRouter, Depends, Response, status
+from fastapi import APIRouter, Depends, Query, Response, status
+from fastapi_pagination import Page
 from sqlalchemy.orm import Session
 
 from app.routers.deps import auth, get_db_session
@@ -40,9 +41,14 @@ def delete_product(id: int, db_session: Session = Depends(get_db_session)):
     return Response(status_code=status.HTTP_200_OK)
 
 
-@router.get("/list", response_model=List[ProductOutput], description="List products")
-def list_product(search: str = "", db_session: Session = Depends(get_db_session)):
+@router.get("/list", response_model=Page[ProductOutput], description="List products")
+def list_product(
+    search: str = "",
+    page: int = Query(1, ge=1, description="Page number"),
+    size: int = Query(50, ge=1, le=100, description="Page size"),
+    db_session: Session = Depends(get_db_session),
+):
     uc = ProductUseCases(db_session=db_session)
-    products = uc.list_products(search=search)
+    products = uc.list_products(page=page, size=size, search=search)
 
     return products

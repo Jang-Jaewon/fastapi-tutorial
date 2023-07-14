@@ -1,5 +1,6 @@
 import pytest
 from fastapi.exceptions import HTTPException
+from fastapi_pagination import Page
 
 from app.db.models import Product as ProductModel
 from app.schemas.product import Product, ProductOutput
@@ -80,26 +81,25 @@ def test_delete_product_non_exist(db_session):
 def test_list_products_uc(db_session, products_on_db):
     uc = ProductUseCases(db_session=db_session)
 
-    products = uc.list_products()
+    page = uc.list_products(page=1, size=2)
 
-    for product in products_on_db:
-        db_session.refresh(product)
+    assert type(page) == Page
+    assert len(page.items) == 2
+    assert page.total == 4
+    assert page.page == 1
+    assert page.size == 2
+    assert page.pages == 2
 
-    assert len(products) == 4
-    assert type(products[0]) == ProductOutput
-    assert products[0].name == products_on_db[0].name
-    assert products[0].category.name == products_on_db[0].category.name
+    assert page.items[0].name == products_on_db[0].name
+    assert page.items[0].category.name == products_on_db[0].category.name
 
 
 def test_list_products_uc_with_search(db_session, products_on_db):
     uc = ProductUseCases(db_session=db_session)
 
-    products = uc.list_products(search="dog")
+    page = uc.list_products(search="dog")
 
-    for product in products_on_db:
-        db_session.refresh(product)
-
-    assert len(products) == 3
-    assert type(products[0]) == ProductOutput
-    assert products[0].name == products_on_db[0].name
-    assert products[0].category.name == products_on_db[0].category.name
+    assert type(page) == Page
+    assert len(page.items) == 3
+    assert page.items[0].name == products_on_db[0].name
+    assert page.items[0].category.name == products_on_db[0].category.name
