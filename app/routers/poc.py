@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends
+from fastapi_pagination import Page, add_pagination, paginate
 from sqlalchemy.orm import Session
+
+from app.db.models import Category as CategoryModel
 from app.routers.deps import get_db_session
 from app.schemas.category import CategoryOutput
-from app.db.models import Category as CategoryModel
-from fastapi_pagination import add_pagination, paginate, Page
-
 
 router = APIRouter(prefix="/poc", tags=["POC"])
 
@@ -17,5 +17,6 @@ def list_categories():
     ]
 
     return paginate(categories)
+
 
 add_pagination(router)
