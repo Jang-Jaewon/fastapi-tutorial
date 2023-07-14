@@ -35,4 +35,4 @@ class ProductOutput(Product):
     category: Category
 
     class Config:
-        orm_mode = True
+        from_attributes = True
