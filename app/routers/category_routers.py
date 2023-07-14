@@ -3,11 +3,11 @@ from typing import List
 from fastapi import APIRouter, Depends, Response, status
 from sqlalchemy.orm import Session
 
-from app.routers.deps import get_db_session
+from app.routers.deps import auth, get_db_session
 from app.schemas.category import Category, CategoryOutput
 from app.use_cases.category import CategoryUseCases
 
-router = APIRouter(prefix="/category", tags=["Category"])
+router = APIRouter(prefix="/category", tags=["Category"], dependencies=[Depends(auth)])
 
 
 @router.post(
